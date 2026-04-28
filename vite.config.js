@@ -10,13 +10,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'chart-vendor': ['chart.js', 'react-chartjs-2'],
-          'motion-vendor': ['framer-motion'],
-          'i18n-vendor': ['react-i18next', 'i18next'],
-        }
-      }
-    }
+        manualChunks: (id) => {
+          if (id.includes('react') || id.includes('react-dom')) return 'react-vendor';
+          if (id.includes('chart.js') || id.includes('react-chartjs-2')) return 'chart-vendor';
+          if (id.includes('framer-motion')) return 'motion-vendor';
+          if (id.includes('react-i18next') || id.includes('i18next')) return 'i18n-vendor';
+        },
+      },
+    },
   }
 })
