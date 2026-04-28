@@ -75,7 +75,7 @@ export default function App() {
       {/* Sticky WhatsApp CTA Bar (rectangular) */}
       <WhatsAppCTA />
 
-      {/* Floating WhatsApp Bubble (always visible corner) */}
+      {/* Floating WhatsApp Bubble */}
       <a
         href="https://wa.me/905550570368"
         id="whatsapp-float"
@@ -84,8 +84,8 @@ export default function App() {
         aria-label="WhatsApp ile İletişim"
         title="WhatsApp'tan Yaz"
         style={{
-          position: 'fixed', bottom: '5.5rem', right: '1.5rem', zIndex: 997,
-          width: '54px', height: '54px',
+          position: 'fixed', bottom: '4.5rem', right: '1.5rem', zIndex: 997,
+          width: '52px', height: '52px',
           background: '#25D366',
           borderRadius: '50%',
           display: 'flex', alignItems: 'center', justifyContent: 'center',

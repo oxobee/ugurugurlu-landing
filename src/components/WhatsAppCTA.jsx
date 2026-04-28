@@ -1,162 +1,152 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MessageCircle, X, Clock, Star, Shield } from 'lucide-react';
+import { MessageCircle, X } from 'lucide-react';
 
-/* Sticky bottom WhatsApp CTA bar — appears after scrolling 300px */
 export default function WhatsAppCTA() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const lang = i18n.language || 'tr';
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      if (window.scrollY > 300 && !dismissed) setVisible(true);
-      else if (window.scrollY <= 300) setVisible(false);
+      if (!dismissed && window.scrollY > 400) setVisible(true);
+      else if (window.scrollY <= 400) setVisible(false);
     };
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, [dismissed]);
 
   if (dismissed) return null;
 
   const TEXTS = {
-    tr: {
-      pre: '💬 Şu an aktif olarak proje alıyorum —',
-      bold: 'Hemen WhatsApp\'tan yazın!',
-      sub: '⚡ Genellikle 5 dakika içinde yanıt veriyorum',
-      cta: 'WhatsApp\'tan Yaz',
-      dismiss: 'Kapat',
-    },
-    en: {
-      pre: '💬 Currently accepting new projects —',
-      bold: 'Message on WhatsApp now!',
-      sub: '⚡ I usually reply within 5 minutes',
-      cta: 'Write on WhatsApp',
-      dismiss: 'Close',
-    },
-    ar: {
-      pre: '💬 أقبل مشاريع جديدة حالياً —',
-      bold: 'راسلني على واتساب الآن!',
-      sub: '⚡ عادةً ما أرد خلال 5 دقائق',
-      cta: 'تواصل عبر واتساب',
-      dismiss: 'إغلاق',
-    },
+    tr: { main: 'Teklif almak için WhatsApp\'tan yazın', cta: 'WhatsApp\'tan Yaz' },
+    en: { main: 'Message us on WhatsApp for a quote', cta: 'Chat on WhatsApp' },
+    ar: { main: 'راسلنا على واتساب للحصول على عرض', cta: 'واتساب' },
   };
-
   const text = TEXTS[lang] || TEXTS.tr;
 
   return (
-    <div style={{
-      position: 'fixed', bottom: 0, left: 0, right: 0,
-      zIndex: 998,
-      transform: visible ? 'translateY(0)' : 'translateY(100%)',
-      transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-    }}>
-      {/* Main CTA Bar */}
+    <>
+      {/* ── Sticky Bar ── */}
       <div style={{
-        background: 'linear-gradient(135deg, #0c0c0c 0%, #1a0005 50%, #0c0c0c 100%)',
-        borderTop: '1px solid rgba(229,0,26,0.3)',
-        padding: '0.85rem 1.5rem',
-        display: 'flex', alignItems: 'center',
-        justifyContent: 'space-between', gap: '1rem',
-        flexWrap: 'wrap',
-        boxShadow: '0 -8px 30px rgba(0,0,0,0.4)',
+        position: 'fixed',
+        bottom: 0, left: 0, right: 0,
+        zIndex: 998,
+        transform: visible ? 'translateY(0)' : 'translateY(100%)',
+        transition: 'transform 0.38s cubic-bezier(0.4,0,0.2,1)',
       }}>
-        {/* Trust signals row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1, minWidth: '200px', flexWrap: 'wrap' }}>
-          {/* Avatar */}
+        <div style={{
+          background: 'rgba(10,10,10,0.97)',
+          backdropFilter: 'blur(12px)',
+          borderTop: '1px solid rgba(229,0,26,0.25)',
+          /* ── Desktop: flex row, full width ── */
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '0.75rem',
+          padding: '0.65rem 1.25rem',
+          boxShadow: '0 -4px 24px rgba(0,0,0,0.35)',
+        }}>
+
+          {/* Online dot + label — hide on smallest screens */}
           <div style={{
-            width: '42px', height: '42px', flexShrink: 0,
-            background: 'var(--gradient-red)', borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: '900', color: 'white', fontSize: '1.1rem',
-            boxShadow: '0 0 15px rgba(229,0,26,0.4)',
-            position: 'relative',
-          }}>
-            U
-            {/* Online dot */}
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            flexShrink: 0,
+          }} className="wa-label">
             <div style={{
-              position: 'absolute', bottom: '1px', right: '1px',
-              width: '10px', height: '10px', background: '#25D366',
-              borderRadius: '50%', border: '2px solid #0c0c0c',
+              width: '8px', height: '8px', borderRadius: '50%',
+              background: '#25D366',
+              boxShadow: '0 0 6px rgba(37,211,102,0.8)',
+              animation: 'wa-blink 1.8s infinite',
             }} />
-          </div>
-
-          <div>
-            <div style={{ color: 'white', fontSize: '0.88rem', lineHeight: 1.4 }}>
-              {text.pre} <strong style={{ color: '#25D366' }}>{text.bold}</strong>
-            </div>
-            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.72rem', marginTop: '0.2rem' }}>
-              {text.sub}
-            </div>
-          </div>
-        </div>
-
-        {/* Trust badges */}
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }} className="trust-badges">
-          {[
-            { icon: <Clock size={11} />, label: lang === 'ar' ? '5 دقائق' : lang === 'en' ? '5 min reply' : '5 dak. yanıt' },
-            { icon: <Star size={11} />, label: lang === 'ar' ? 'جودة عالية' : lang === 'en' ? 'Pro quality' : 'Pro kalite' },
-            { icon: <Shield size={11} />, label: lang === 'ar' ? 'مضمون' : lang === 'en' ? 'Guaranteed' : 'Garantili' },
-          ].map((b, i) => (
-            <div key={i} style={{
-              display: 'flex', alignItems: 'center', gap: '0.3rem',
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              padding: '0.3rem 0.6rem', borderRadius: '6px',
-              color: 'rgba(255,255,255,0.6)', fontSize: '0.68rem',
+            <span style={{
+              color: 'rgba(255,255,255,0.65)',
+              fontSize: '0.8rem', fontWeight: '500',
+              whiteSpace: 'nowrap',
             }}>
-              {b.icon} {b.label}
-            </div>
-          ))}
-        </div>
+              {text.main}
+            </span>
+          </div>
 
-        {/* CTA Button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
-          <a href="https://wa.me/905550570368?text=Merhaba, teklif almak istiyorum."
-            id="sticky-whatsapp-cta"
-            rel="noopener noreferrer" target="_blank"
+          {/* CTA Button */}
+          <a
+            href="https://wa.me/905550570368?text=Merhaba, teklif almak istiyorum."
+            id="sticky-wa-btn"
+            rel="noopener noreferrer"
+            target="_blank"
             style={{
-              display: 'flex', alignItems: 'center', gap: '0.5rem',
-              background: '#25D366', color: 'white',
-              padding: '0.7rem 1.4rem', borderRadius: '10px',
-              fontWeight: '800', fontSize: '0.9rem',
-              textDecoration: 'none', whiteSpace: 'nowrap',
-              boxShadow: '0 4px 20px rgba(37,211,102,0.4)',
-              transition: 'all 0.2s',
+              display: 'flex', alignItems: 'center', gap: '0.45rem',
+              background: '#25D366',
+              color: 'white',
+              padding: '0.6rem 1.4rem',
+              borderRadius: '8px',
+              fontWeight: '800', fontSize: '0.88rem',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 3px 14px rgba(37,211,102,0.4)',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              flexShrink: 0,
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.04)'; e.currentTarget.style.boxShadow = '0 6px 25px rgba(37,211,102,0.55)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(37,211,102,0.4)'; }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'scale(1.04)';
+              e.currentTarget.style.boxShadow = '0 5px 20px rgba(37,211,102,0.55)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 3px 14px rgba(37,211,102,0.4)';
+            }}
           >
-            <MessageCircle size={17} fill="white" />
+            <MessageCircle size={16} fill="white" />
             {text.cta}
           </a>
 
           {/* Dismiss */}
-          <button onClick={() => { setDismissed(true); setVisible(false); }}
-            id="sticky-dismiss"
+          <button
+            id="sticky-dismiss-btn"
+            onClick={() => { setDismissed(true); setVisible(false); }}
+            aria-label="Kapat"
             style={{
-              background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)',
-              color: 'rgba(255,255,255,0.5)', cursor: 'pointer',
-              width: '34px', height: '34px', borderRadius: '8px',
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              color: 'rgba(255,255,255,0.45)',
+              cursor: 'pointer',
+              width: '30px', height: '30px',
+              borderRadius: '6px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
               transition: 'all 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'white'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; }}
-            aria-label="Kapat"
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.13)';
+              e.currentTarget.style.color = 'white';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.07)';
+              e.currentTarget.style.color = 'rgba(255,255,255,0.45)';
+            }}
           >
-            <X size={14} />
+            <X size={13} />
           </button>
         </div>
       </div>
 
       <style>{`
+        @keyframes wa-blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+
+        /* ── Mobile: thinner, centered, tighter ── */
         @media (max-width: 640px) {
-          .trust-badges { display: none !important; }
+          #sticky-wa-btn {
+            padding: 0.55rem 1.1rem !important;
+            font-size: 0.82rem !important;
+            border-radius: 7px !important;
+          }
+          .wa-label { display: none !important; }
         }
       `}</style>
-    </div>
+    </>
   );
 }
