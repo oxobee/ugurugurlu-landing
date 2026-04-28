@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800;900&display=swap');
+
+/* ===== CSS Variables ===== */
+:root {
+  --red: #E5001A;
+  --red-dark: #B8001A;
+  --red-light: #FF1A35;
+  --black: #0A0A0A;
+  --black-soft: #111111;
+  --white: #FFFFFF;
+  --gray-100: #F5F5F5;
+  --gray-200: #E8E8E8;
+  --gray-400: #9CA3AF;
+  --gray-600: #4B5563;
+  --gray-800: #1F2937;
+  --gradient-hero: linear-gradient(135deg, #0A0A0A 0%, #1a0005 50%, #0A0A0A 100%);
+  --gradient-red: linear-gradient(135deg, #E5001A, #FF1A35);
+  --glow-red: 0 0 30px rgba(229, 0, 26, 0.4), 0 0 60px rgba(229, 0, 26, 0.2);
+}
+
+/* ===== Base Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', 'Outfit', sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] {
+  font-family: 'Cairo', 'Tajawal', 'Inter', sans-serif;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--red);
+  border-radius: 3px;
+}
+
+/* ===== Selection ===== */
+::selection {
+  background: var(--red);
+  color: white;
+}
+
+/* ===== Utility Classes ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-pad {
+  padding: 5rem 0;
+}
+
+/* ===== Button Styles ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gradient-red);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--glow-red);
+  letter-spacing: 0.02em;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(229, 0, 26, 0.6), 0 0 80px rgba(229, 0, 26, 0.3);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+}
+
+.btn-secondary:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(229, 0, 26, 0.08);
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover {
+  background: #20B85A;
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(37, 211, 102, 0.5);
+}
+
+/* ===== Badge ===== */
+.badge-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--red);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(229, 0, 26, 0.6); }
+  50% { box-shadow: 0 0 0 8px rgba(229, 0, 26, 0); }
+}
+
+/* ===== Section Titles ===== */
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--gray-600);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+.text-red {
+  color: var(--red);
+}
+
+.underline-red {
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 6px;
+}
+
+/* ===== Card Styles ===== */
+.card-base {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.card-base:hover {
+  border-color: var(--red);
+  box-shadow: 0 4px 30px rgba(229, 0, 26, 0.1);
+  transform: translateY(-4px);
+}
+
+/* ===== Video Placeholder ===== */
+.video-placeholder {
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(229,0,26,0.1), transparent, rgba(229,0,26,0.05));
+}
+
+/* ===== Animations ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* ===== Language Toggle ===== */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+.lang-btn {
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+}
+
+.lang-btn.active {
+  background: var(--red);
+  color: white;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .section-pad { padding: 3.5rem 0; }
+  .section-title { font-size: 1.8rem; }
+  .btn-primary, .btn-secondary, .btn-whatsapp {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+  }
+}

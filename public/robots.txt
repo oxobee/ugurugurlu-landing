@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ugurugurlu.net/sitemap.xml
+
+# Block unnecessary assets from indexing
+Disallow: /node_modules/
+Disallow: /.git/
