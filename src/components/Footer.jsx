@@ -34,24 +34,30 @@ export default function Footer() {
               </div>
             </div>
             <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.83rem', lineHeight: '1.7', maxWidth: '250px' }}>
-              Trendyol, Hepsiburada, Amazon ve daha fazlasında satışlarınızı artırmak için yapay zeka destekli görsel üretim.
+              {t('footer.tagline')} — Trendyol, Hepsiburada, Amazon, Etsy & more.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
             <h4 style={{ color: 'white', fontWeight: '700', marginBottom: '1.2rem', fontSize: '0.9rem' }}>
-              Hızlı Bağlantılar
+              {t('nav.services') !== 'Hizmetler' ? 'Quick Links' : t('nav.contact') !== 'İletişim' ? 'روابط سريعة' : 'Hızlı Bağlantılar'}
             </h4>
-            {['#services', '#portfolio', '#packages', '#faq', '#contact'].map((href, i) => (
-              <a key={i} href={href} style={{
+            {[
+              { href: '#services', label: t('nav.services') },
+              { href: '#portfolio', label: t('nav.portfolio') },
+              { href: '#packages', label: t('nav.packages') },
+              { href: '#faq', label: 'FAQ' },
+              { href: '#contact', label: t('nav.contact') },
+            ].map((item, i) => (
+              <a key={i} href={item.href} style={{
                 display: 'block', color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
                 fontSize: '0.85rem', marginBottom: '0.6rem', transition: 'color 0.2s',
               }}
                 onMouseEnter={e => e.target.style.color = 'var(--red)'}
                 onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.4)'}
               >
-                {['Hizmetler', 'Örnekler', 'Paketler', 'SSS', 'İletişim'][i]}
+                {item.label}
               </a>
             ))}
           </div>
@@ -59,7 +65,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h4 style={{ color: 'white', fontWeight: '700', marginBottom: '1.2rem', fontSize: '0.9rem' }}>
-              İletişim
+              {t('nav.contact')}
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[

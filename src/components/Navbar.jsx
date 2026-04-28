@@ -138,7 +138,11 @@ export default function Navbar() {
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .mobile-only { display: block !important; }
+          .mobile-only { display: flex !important; align-items: center; }
+          #nav-cta-btn { display: none !important; }
+        }
+        @media (min-width: 769px) {
+          .mobile-only { display: none !important; }
         }
       `}</style>
     </nav>

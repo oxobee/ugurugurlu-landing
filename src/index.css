@@ -302,4 +302,23 @@ body {
     font-size: 0.9rem;
     padding: 0.8rem 1.5rem;
   }
+  /* Force responsive grids on mobile */
+  [style*="grid-template-columns: repeat(3, 1fr)"],
+  [style*="grid-template-columns: 1fr 1fr 1fr"],
+  [style*="grid-template-columns: repeat(4, 1fr)"],
+  [style*="grid-template-columns: repeat(5, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns: 1fr auto 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Hero grid */
+  [style*="grid-template-columns: 1fr 1fr"][id="hero"],
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
+
